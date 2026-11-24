@@ -1,0 +1,49 @@
+base {
+    archivesName = "jpi-mini-mc"
+}
+
+sourceSets {
+    loaderStubs
+    main {
+        compileClasspath += sourceSets.loaderStubs.output
+    }
+}
+
+dependencies {
+    compileOnly project(":core")
+    api "com.google.code.gson:gson:2.10.1"
+    testImplementation project(":core")
+}
+
+tasks.named("compileJava") {
+    dependsOn tasks.named("compileLoaderStubsJava")
+}
+
+tasks.named("processResources") {
+    inputs.property "version", project.version
+    filesMatching(["fabric.mod.json", "quilt.mod.json", "META-INF/*.toml", "jpimini.properties"]) {
+        expand version: project.version
+    }
+}
+
+tasks.named("jar", Jar) {
+    from project(":core").sourceSets.main.output
+    manifest {
+        attributes "Automatic-Module-Name": "io.github.izakyl.jpi.mc"
+    }
+}
+
+tasks.named("sourcesJar", Jar) {
+    from project(":core").sourceSets.main.allSource
+}
+
+tasks.named("javadoc", Javadoc) {
+    source project(":core").sourceSets.main.allJava
+    classpath += sourceSets.loaderStubs.output
+}
+
+tasks.named("test") {
+    dependsOn tasks.named("jar")
+    systemProperty "jpimini.testVersion", project.version.toString()
+    systemProperty "jpimini.testJar", tasks.named("jar", Jar).get().archiveFile.get().asFile.absolutePath
+}

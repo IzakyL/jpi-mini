@@ -1,0 +1,10 @@
+data: {"choices": [{"index": 0, "delta": {"reasoning_content": "Let me ", "reasoning": "Let me "}, "finish_reason": null}]}
+
+data: {"choices": [{"index": 0, "delta": {"reasoning_content": "think."}, "finish_reason": null}]}
+
+data: {"choices": [{"index": 0, "delta": {"content": "42"}, "finish_reason": null}]}
+
+data: {"choices": [{"index": 0, "delta": {}, "finish_reason": "stop"}]}
+
+data: [DONE]
+

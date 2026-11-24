@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "quilt_loader": {
+    "group": "io.github.izakyl",
+    "id": "jpimini",
+    "version": "${version}",
+    "metadata": {
+      "name": "jpi-mini for Minecraft",
+      "description": "Shared LLM providers, agent loop and credentials for Minecraft mods.",
+      "contributors": {"IzakyL": "Owner"},
+      "license": "MIT"
+    },
+    "intermediate_mappings": "net.fabricmc:intermediary",
+    "depends": [
+      {"id": "minecraft", "versions": "*"},
+      {"id": "java", "versions": ">=17"}
+    ]
+  },
+  "minecraft": {"environment": "*"}
+}

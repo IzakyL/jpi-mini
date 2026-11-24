@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "jpimini",
+  "version": "${version}",
+  "name": "jpi-mini for Minecraft",
+  "description": "Shared LLM providers, agent loop and credentials for Minecraft mods.",
+  "authors": ["IzakyL"],
+  "license": "MIT",
+  "environment": "*",
+  "depends": {
+    "minecraft": "*",
+    "java": ">=17"
+  }
+}

@@ -1,0 +1,12 @@
+data: {"choices": [{"index": 0, "delta": {"role": "assistant"}, "finish_reason": null}]}
+
+data: {"choices": [{"index": 0, "delta": {"content": "Hello"}, "finish_reason": null}]}
+
+data: {"choices": [{"index": 0, "delta": {"content": " 世界"}, "finish_reason": null}]}
+
+data: {"choices": [{"index": 0, "delta": {}, "finish_reason": "stop"}]}
+
+data: {"choices": [], "usage": {"prompt_tokens": 20, "completion_tokens": 5, "total_tokens": 25, "prompt_tokens_details": {"cached_tokens": 8}, "completion_tokens_details": {"reasoning_tokens": 2}}}
+
+data: [DONE]
+

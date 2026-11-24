@@ -1,0 +1,15 @@
+event: response.output_item.added
+data: {"type":"response.output_item.added","output_index":0,"item":{"type":"message","id":"msg_final","role":"assistant","phase":"final_answer","content":[]}}
+
+event: response.output_text.delta
+data: {"type":"response.output_text.delta","output_index":0,"delta":"It is "}
+
+event: response.output_text.delta
+data: {"type":"response.output_text.delta","output_index":0,"delta":"sunny."}
+
+event: response.output_item.done
+data: {"type":"response.output_item.done","output_index":0,"item":{"type":"message","id":"msg_final","role":"assistant","phase":"final_answer","content":[{"type":"output_text","text":"It is sunny.","annotations":[]}],"status":"completed"}}
+
+event: response.completed
+data: {"type":"response.completed","response":{"status":"completed","usage":{"input_tokens":20,"input_tokens_details":{"cached_tokens":8},"output_tokens":5,"output_tokens_details":{"reasoning_tokens":2},"total_tokens":25}}}
+

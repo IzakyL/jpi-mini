@@ -1,0 +1,13 @@
+base {
+    archivesName = "jpi-mini"
+}
+
+dependencies {
+    api "com.google.code.gson:gson:2.10.1"
+}
+
+tasks.named("jar", Jar) {
+    manifest {
+        attributes "Automatic-Module-Name": "io.github.izakyl.jpi"
+    }
+}

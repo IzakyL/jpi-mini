@@ -1,0 +1,11 @@
+modLoader="javafml"
+loaderVersion="[0,)"
+license="MIT"
+
+[[mods]]
+modId="jpimini"
+version="${version}"
+displayName="jpi-mini for Minecraft"
+authors="IzakyL"
+description="Shared LLM providers, agent loop and credentials for Minecraft mods."
+displayTest="IGNORE_ALL_VERSION"

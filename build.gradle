@@ -1,0 +1,129 @@
+plugins {
+    id "base"
+}
+
+allprojects {
+    group = "io.github.izakyl"
+    version = "0.1.0"
+}
+
+subprojects {
+    apply plugin: "java-library"
+    apply plugin: "maven-publish"
+
+    repositories {
+        mavenCentral()
+    }
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(21)
+        }
+        withSourcesJar()
+        withJavadocJar()
+    }
+
+    tasks.withType(JavaCompile).configureEach {
+        options.encoding = "UTF-8"
+        options.release = 17
+    }
+
+    dependencies {
+        testImplementation platform("org.junit:junit-bom:5.11.4")
+        testImplementation "org.junit.jupiter:junit-jupiter"
+        testRuntimeOnly "org.junit.platform:junit-platform-launcher"
+    }
+
+    tasks.named("test") {
+        useJUnitPlatform()
+    }
+
+    def checkStyle = tasks.register("checkStyle") {
+        group = "verification"
+        description = "Checks Java sources for whitespace, line length and wildcard imports."
+        inputs.files(fileTree("src") { include "**/*.java" })
+        doLast {
+            def violations = []
+            inputs.files.files.sort().each { file ->
+                file.eachLine("UTF-8") { line, number ->
+                    def location = "${relativePath(file)}:${number}"
+                    if (line.contains("\t")) {
+                        violations.add("${location}: tab character")
+                    }
+                    if (line != line.stripTrailing()) {
+                        violations.add("${location}: trailing whitespace")
+                    }
+                    if (line.length() > 120) {
+                        violations.add("${location}: line exceeds 120 characters (${line.length()})")
+                    }
+                    if (line =~ /^\s*import\s+(static\s+)?[\w.]+\.\*\s*;.*/) {
+                        violations.add("${location}: wildcard import")
+                    }
+                }
+            }
+            if (!violations.isEmpty()) {
+                throw new GradleException(violations.join("\n"))
+            }
+        }
+    }
+
+    tasks.named("check") {
+        dependsOn checkStyle
+    }
+
+    tasks.withType(Jar).configureEach {
+        from(rootProject.files("LICENSE", "THIRD_PARTY.md")) {
+            into "META-INF"
+        }
+        preserveFileTimestamps = false
+        reproducibleFileOrder = true
+    }
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                artifactId = project.name == "core" ? "jpi-mini" : "jpi-mini-mc"
+                from components.java
+                pom {
+                    name = project.name == "core" ? "jpi-mini" : "jpi-mini for Minecraft"
+                    description = project.name == "core"
+                            ? "Java LLM streaming providers and agent loop"
+                            : "Shared LLM streaming, agent loop, and credentials for Minecraft mods"
+                    url = "https://github.com/IzakyL/jpi-mini"
+                    licenses {
+                        license {
+                            name = "MIT License"
+                            url = "https://opensource.org/license/mit"
+                        }
+                    }
+                    developers {
+                        developer {
+                            id = "IzakyL"
+                            name = "IzakyL"
+                            url = "https://github.com/IzakyL"
+                        }
+                    }
+                    scm {
+                        url = "https://github.com/IzakyL/jpi-mini"
+                        connection = "scm:git:https://github.com/IzakyL/jpi-mini.git"
+                        developerConnection = "scm:git:ssh://git@github.com/IzakyL/jpi-mini.git"
+                    }
+                }
+            }
+        }
+        repositories {
+            maven {
+                name = "local"
+                url = rootProject.layout.buildDirectory.dir("repo")
+            }
+        }
+    }
+}
+
+tasks.named("check") {
+    dependsOn subprojects.collect { it.tasks.named("check") }
+}
+
+tasks.named("assemble") {
+    dependsOn subprojects.collect { it.tasks.named("assemble") }
+}

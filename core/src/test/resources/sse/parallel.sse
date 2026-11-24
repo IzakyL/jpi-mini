@@ -1,0 +1,8 @@
+data: {"choices": [{"index": 0, "delta": {"tool_calls": [{"index": 0, "function": {"arguments": "{\"city\":\"", "name": "weather"}, "id": "a"}, {"index": 1, "function": {"arguments": "{\"city\":", "name": "weather"}, "id": "b"}]}, "finish_reason": null}]}
+
+data: {"choices": [{"index": 0, "delta": {"tool_calls": [{"index": 1, "function": {"arguments": "\"Tokyo\"}"}}, {"index": 0, "function": {"arguments": "Paris\"}"}}]}, "finish_reason": null}]}
+
+data: {"choices": [{"index": 0, "delta": {}, "finish_reason": "tool_calls"}]}
+
+data: [DONE]
+
